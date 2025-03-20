@@ -1,0 +1,15 @@
+FROM golang:1.22.12
+
+ENV APP_ROOT /app
+WORKDIR $APP_ROOT
+COPY ./ $APP_ROOT
+
+# apt-getを使用してgitをインストール
+RUN apt-get update && apt-get install -y git
+RUN go install github.com/cosmtrek/air@v1.29.0
+
+# RUN go mod download
+# RUN go mod tidy
+
+EXPOSE 8080
+CMD ["air",, "-c", ".air.toml"]

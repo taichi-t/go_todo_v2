@@ -1,0 +1,32 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: tech
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: tech
+    volumes:
+      - db-store:/var/lib/postgresql/data
+  app:
+    container_name: app
+    build:
+      dockerfile: ./app/Dockerfile.local
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/app
+    command: air -c .air.toml
+    healthcheck:
+      test: "curl localhost:8081/healthcheck"
+      interval: 2s
+      timeout: 1s
+      retries: 50
+      start_period: 15s
+volumes:
+  db-store:
