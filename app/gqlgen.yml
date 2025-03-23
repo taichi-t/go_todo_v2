@@ -1,12 +1,12 @@
 # Where are all the schema files located? globs are supported eg  src/**/*.graphqls
 schema:
-  - gql/schema/*.graphqls
+  - adapter/gql/schema/*.graphqls
 
 # Where should the generated server code go?
 exec:
   package: gql
   # Only for single-file layout:
-  filename: gql/server_generated.go
+  filename: adapter/gql/server_generated.go
 
   # Only for follow-schema layout:
   # dir: graph
@@ -26,7 +26,7 @@ exec:
 # Where should any generated models go?
 model:
   package: model
-  filename: gql/model/model_generated.go
+  filename: adapter/gql/model/model_generated.go
 
   # Optional: Pass in a path to a new gotpl template to use for generating the models
   # model_template: [your/path/model.gotpl]
@@ -39,7 +39,7 @@ resolver:
   # filename: graph/resolver.go
 
   # Only for follow-schema layout:
-  dir: gql/resolver
+  dir: adapter/gql/resolver
   filename_template: "{name}.resolvers.go"
 
   # Optional: turn on to not generate template comments above resolvers
@@ -113,8 +113,8 @@ call_argument_directives_with_null: true
 
 # gqlgen will search for any type names in the schema in these go packages
 # if they match it will use them, otherwise it will generate them.
-autobind:
-  - "github.com/taichi-t/go_todo_v2/gql/model"
+# autobind:
+#   - "github.com/taichi-t/go_todo_v2/adapter/gql/model"
 
 # This section declares type mapping between the GraphQL and go type systems
 #
@@ -150,8 +150,3 @@ models:
     model:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
-
-  Todo:
-    fields:
-      user:
-        resolver: true
